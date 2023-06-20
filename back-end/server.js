@@ -1,6 +1,9 @@
 var express = require("express");
 var app = express();
-var users = require("./user.json");
+var users = require("./users.json");
+var fs = require("fs");
+var path = require("path");
+var usersDataFilePath = path.join(__dirname, "users.json");
 // const bodyParser = require("body-parser");
 // app.use(bodyParser.json());
 
@@ -15,22 +18,12 @@ app.get("/users", function (req, res) {
 app.get("/users/:id", function (req, res) {
   // var aUser = users[req.params.id];
   console.log("req ->", req.params.id);
-  var aUser = users.filter((user) => {
-    return user.id == req.params.id;
+  var aUser = users.filter((_, index) => {
+    return index + 1 == req.params.id;
   });
   console.log(aUser);
   res.send(aUser);
 });
-
-// var user = {
-//   user4: { name: "betty", password: "4444", occupation: "engineer", id: 4 },
-// };
-
-// app.post("/users", function (req, res) {
-//   users["user4"] = req.body;
-//   console.log(users);
-//   res.send(users);
-// });
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -47,6 +40,31 @@ app.post("/login", (req, res) => {
   } else {
     // User not found, send error response
     res.status(401).json({ message: "Invalid username or password" });
+  }
+});
+
+// Signup endpoint
+app.post("/signup", (req, res) => {
+  const { username, password, role, id } = req.body;
+
+  // Check if the username already exists
+  const existingUser = users.find((user) => user.username === username);
+
+  if (existingUser) {
+    res.status(409).json({ message: "Username already exists" });
+  } else {
+    // Add new user to the users data
+    const newUser = { username, password, role, id };
+    users.push(newUser);
+
+    // Write the updated user data to the JSON file
+    fs.writeFile(usersDataFilePath, JSON.stringify(users), (err) => {
+      if (err) {
+        res.status(500).json({ message: "Error writing to file" });
+      } else {
+        res.status(201).json({ message: "Signup successful", user: newUser });
+      }
+    });
   }
 });
 
