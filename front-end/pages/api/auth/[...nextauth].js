@@ -44,4 +44,9 @@ export default NextAuth({
       return session;
     },
   },
+  pages: {
+    signIn: "/signin",
+    signOut: "/signin",
+    error: "/signin",
+  },
 });
