@@ -12,7 +12,6 @@ export default function Login() {
       username: userLogin.username,
       password: userLogin.password,
       redirect: true,
-      callbackUrl: "/",
     });
   };
 

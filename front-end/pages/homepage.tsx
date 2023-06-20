@@ -7,7 +7,7 @@ export default function Home() {
 
   useEffect(() => {
     console.log(data);
-    if (status === "unauthenticated") Router.replace("/login");
+    if (status === "unauthenticated") Router.replace("/signin");
   }, [status]);
   return <div>Hi</div>;
 }

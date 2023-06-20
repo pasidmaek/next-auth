@@ -1,9 +1,19 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import { signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
+import Router from "next/router";
+import { Button } from "@mui/material";
 
 export default function Home() {
-  return <></>;
+  const { status, data } = useSession();
+
+  useEffect(() => {
+    console.log(data);
+    if (status === "unauthenticated") Router.replace("/signin");
+  }, [status]);
+  return (
+    <div>
+      Index Page
+      <Button onClick={() => signOut()}>Sign out</Button>
+    </div>
+  );
 }

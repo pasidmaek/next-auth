@@ -14,15 +14,13 @@ export const authOptions: NextAuthOptions = {
 
         const { username, password } = credentials as any;
         const res = await fetch(
-            "http://127.0.0.1:8081/login",
+            "http://127.0.0.1:5000/login",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(credentials),
           }
         );
-        /* .then((res) => res.json())
-          .then(console.log); */
         const data = await res.json();
         console.log(data);
 
