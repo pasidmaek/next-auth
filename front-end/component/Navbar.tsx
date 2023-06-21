@@ -9,7 +9,7 @@ function Navbar() {
   const { status, data: session } = useSession();
 
   return (
-    <AppBar>
+    <AppBar sx={{ position: "relative" }}>
       {status === "authenticated" && (
         <div
           style={{
@@ -39,11 +39,13 @@ function Navbar() {
         </div>
       )}
       {status === "unauthenticated" && (
-        <div style={{
+        <div
+          style={{
             display: "flex",
             flexFlow: "row",
             justifyContent: "end",
-          }}>
+          }}
+        >
           <Button sx={navstyle} href="/signin">
             Sign in
           </Button>
