@@ -10,13 +10,13 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const res = await fetch("http://127.0.0.1:8081/login", {
+        const res = await fetch("http://127.0.0.1:5000/login", {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
         });
         const user = await res.json();
-
+        console.log(user)
         // If no error and we have user data, return it
         if (res.ok && user) {
           return user;
@@ -46,7 +46,7 @@ export default NextAuth({
   },
   pages: {
     signIn: "/signin",
-    signOut: "/signin",
+    signOut: "/signin, /admin, /user",
     error: "/signin",
   },
 });
