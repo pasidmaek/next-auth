@@ -105,9 +105,48 @@ app.post("/signup", (req, res) => {
 });
 
 app.delete("/users/:index", function (req, res) {
-  delete users["user" + req.params.index];
-  console.log(users);
-  res.send(users);
+  const newUser = users.filter((user) => {
+    return user !== users[req.params.index - 1];
+  });
+  console.log("After delete -> ", newUser);
+  // res.send(users);
+  fs.writeFile(usersDataFilePath, JSON.stringify(newUser), (err) => {
+    if (err) {
+      res.status(500).json({ message: "Error writing to file" });
+    } else {
+      res.status(201).json({ message: "Delete successful", user: newUser });
+    }
+  });
+});
+
+app.put("/users/update/:index", function (req, res) {
+  const index = req.params.index - 1;
+  const updatedUser = req.body;
+  // Check if the username already exists
+  const existingUser = users.find(
+    (user) => user.username === updatedUser.username
+  );
+
+  if (existingUser) {
+    res.status(409).json({ message: "Username already exists" });
+  } else {
+    // Check if the index is valid
+    if (index >= 0 && index < users.length) {
+      // Update the user at the specified index
+      users[index] = { ...updatedUser };
+      fs.writeFile(usersDataFilePath, JSON.stringify(users), (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res
+            .status(200)
+            .json({ message: "User updated successfully", user: users });
+        }
+      });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  }
 });
 
 app.post("/signout", (req, res) => {
