@@ -8,6 +8,11 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
+// dotenv
+const dotenv = require("dotenv");
+dotenv.config();
+const PORT = process.env.API_PORT;
+
 interface Column {
   id: "name" | "password" | "role";
   label: string;
@@ -34,7 +39,7 @@ function StickyHeadTable() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://127.0.0.1:5000/users", {
+        const res = await fetch(`http://127.0.0.1:${PORT}/users`, {
           method: "GET",
         });
         if (!res.ok) {
@@ -88,7 +93,7 @@ function StickyHeadTable() {
                     {rows.map((user) => {
                       return (
                         <TableCell key={user.id} align={user.align}>
-                            {user}
+                          {user}
                         </TableCell>
                       );
                     })}

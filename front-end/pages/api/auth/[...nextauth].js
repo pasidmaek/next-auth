@@ -1,5 +1,9 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+const dotenv = require("dotenv");
+dotenv.config();
+
+const PORT = process.env.API_PORT;
 
 export default NextAuth({
   providers: [
@@ -10,13 +14,13 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const res = await fetch("http://127.0.0.1:5000/login", {
+        const res = await fetch(`http://127.0.0.1:${PORT}/login`, {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
         });
         const user = await res.json();
-        console.log(user)
+        console.log(user);
         // If no error and we have user data, return it
         if (res.ok && user) {
           return user;
@@ -29,8 +33,8 @@ export default NextAuth({
   secret: "LlKq6ZtYbr+hTC073mAmAh9/h2HwMfsFo4hrfCx5mLg=",
   callbacks: {
     async jwt({ token, user, account }) {
-      if (account) {
-        token.accessToken = account.access_token;
+      if (user) {
+        token.accessToken = user.access_token;
         console.log("token -> ", token);
         token.user = user;
       }
