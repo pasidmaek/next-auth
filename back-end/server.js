@@ -4,6 +4,7 @@ var users = require("./users.json");
 var fs = require("fs");
 var path = require("path");
 var usersDataFilePath = path.join(__dirname, "users.json");
+const TokenManager = require("./tokenmanager");
 // const bodyParser = require("body-parser");
 // app.use(bodyParser.json());
 
@@ -36,10 +37,45 @@ app.post("/login", (req, res) => {
   );
   if (user) {
     // User found, send success response
-    res.status(200).json({ message: "Login successful", user });
+    let accessToken = TokenManager.getGenerateAccessToken({
+      username: username,
+    });
+    console.log("token -> ", accessToken);
+    res.status(200).json({
+      status: "0",
+      message: "Login successful",
+      user,
+      access_token: accessToken,
+    });
   } else {
     // User not found, send error response
-    res.status(401).json({ message: "Invalid username or password" });
+
+    res.status(401).json({
+      status: "1",
+      message: "Invalid username or password",
+    });
+  }
+});
+
+app.post("/check_authen", (req, res) => {
+  let jwtStatus = TokenManager.checkAuthentication(req);
+  if (jwtStatus != false) {
+    res.send(jwtStatus);
+  } else {
+    res.send(false);
+  }
+});
+
+app.post("/get_user_data", (req, res) => {
+  let jwtStatus = TokenManager.checkAuthentication(req);
+  if (jwtStatus != false) {
+    res.send(
+      users.find((user) => {
+        return user.username == jwtStatus.username;
+      })
+    );
+  } else {
+    res.send(false);
   }
 });
 
@@ -72,6 +108,11 @@ app.delete("/users/:index", function (req, res) {
   delete users["user" + req.params.index];
   console.log(users);
   res.send(users);
+});
+
+app.post("/signout", (req, res) => {
+  // const { token } = req.body;
+  res.status(200).json({ message: "Sign out successful" });
 });
 
 var server = app.listen(8081, function () {
