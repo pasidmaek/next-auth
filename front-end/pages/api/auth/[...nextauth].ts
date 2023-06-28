@@ -18,7 +18,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch("http://127.0.0.1:5000/login", {
+        const res = await fetch("http://127.0.0.1:8081/login", {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
@@ -44,7 +44,13 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (token) {
-        session = token?.user?.user;
+        // session = token?.user?.user;
+        let sessionToken = jwt.sign(
+          token?.user?.user?.username,
+          "57918603f1c43835c880bce87fb2e050b22edafa4319e2732b20a1322e545647"
+          // { algorithm: "RS256" }
+        );
+        session = { userid: sessionToken };
       }
       return session;
     },
@@ -54,6 +60,7 @@ export const authOptions: NextAuthOptions = {
     signOut: "/",
     error: "/signin",
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default NextAuth(authOptions);

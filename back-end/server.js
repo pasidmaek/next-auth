@@ -26,6 +26,17 @@ app.get("/users/:id", function (req, res) {
   res.send(aUser);
 });
 
+app.get("/users/find/:username", function (req, res) {
+  // var aUser = users[req.params.id];
+  console.log("req ->", req.params.username);
+  var aUser = users.filter((user) => {
+    return user.username == req.params.username;
+  });
+  var oneUser = aUser[0];
+  console.log(aUser);
+  res.send(oneUser);
+});
+
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   users.map((user) => {
@@ -82,7 +93,9 @@ app.post("/get_user_data", (req, res) => {
 // Signup endpoint
 app.post("/signup", (req, res) => {
   const { username, password, role, id } = req.body;
-
+  if (!id) {
+    id == users.length + 1;
+  }
   // Check if the username already exists
   const existingUser = users.find((user) => user.username === username);
 
@@ -154,7 +167,7 @@ app.post("/signout", (req, res) => {
   res.status(200).json({ message: "Sign out successful" });
 });
 
-var server = app.listen(5000, function () {
+var server = app.listen(8081, function () {
   var port = server.address().port;
   console.log("Application is running at http://127.0.0.1:%s", port);
 });
