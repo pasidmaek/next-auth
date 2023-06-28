@@ -17,7 +17,7 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: "name", label: "Name", minWidth: 170 },
+  { id: "username", label: "Username", minWidth: 170 },
   { id: "password", label: "Password", minWidth: 170 },
   {
     id: "role",
@@ -26,30 +26,14 @@ const columns: readonly Column[] = [
   },
 ];
 
-function StickyHeadTable() {
+function StickyHeadTable({ data }:any) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState<any[]>([]);
 
   useEffect(() => {
-    fetchData();
+    setRows(data);
   }, []);
-
-  async function fetchData() {
-    try {
-      const res = await fetch("http://127.0.0.1:5000/users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json", // Add the necessary headers
-        },
-      });
-      const data = await res.json();
-      console.log(data);
-      setRows(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -82,15 +66,25 @@ function StickyHeadTable() {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => ( // Use the row index as the key
-                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  {columns.map((column) => ( // Iterate over columns instead of rows
-                    <TableCell key={column.id} align={column.align}>
-                      {row[column.id]} {/* Access the cell value using column id */}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
+              .map(
+                (
+                  row,
+                  index // Use the row index as the key
+                ) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    {columns.map(
+                      (
+                        column // Iterate over columns instead of rows
+                      ) => (
+                        <TableCell key={column.id} align={column.align}>
+                          {row[column.id]}{" "}
+                          {/* Access the cell value using column id */}
+                        </TableCell>
+                      )
+                    )}
+                  </TableRow>
+                )
+              )}
           </TableBody>
         </Table>
       </TableContainer>
