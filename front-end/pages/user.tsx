@@ -1,12 +1,10 @@
 import React from "react";
 import Navbar from "@/component/Navbar";
+import { useSession } from "next-auth/react";
 
 function user() {
-  return (
-    <div>
-      hi, user
-    </div>
-  );
+  const { data } = useSession();
+  return <div>User, Hi</div>;
 }
 
 export default user;

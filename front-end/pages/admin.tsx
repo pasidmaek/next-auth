@@ -5,7 +5,8 @@ import Admintable from "../component/Admintable";
 function admin() {
   return (
     <div>
-      <Admintable />
+      Hi, admin page
+      {/* <Admintable /> */}
     </div>
   );
 }

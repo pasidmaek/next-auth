@@ -27,11 +27,9 @@ function Navbar() {
             <Button sx={navstyle} href="/user">
               User
             </Button>
-            {session?.user?.user.role === "admin" && (
-              <Button sx={navstyle} href="/admin">
-                Admin
-              </Button>
-            )}
+            <Button sx={navstyle} href="/admin">
+              Admin
+            </Button>
             <Button onClick={() => signOut()} sx={navstyle}>
               Sign out
             </Button>

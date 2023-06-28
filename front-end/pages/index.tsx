@@ -1,17 +1,16 @@
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
-import Router from "next/router";
-import { Button } from "@mui/material";
-import Navbar from "@/component/Navbar";
 
 export default function Home() {
-  const { status, data: session } = useSession();
-  useEffect(() => {
-    if (status === "unauthenticated") Router.replace("/signin");
-  }, [status]);
+  const { data } = useSession();
   return (
     <div>
-      
+      <strong>
+        Hi, {data?.username}
+      </strong>
+      <br/>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
+      possimus beatae ipsa facere, cumque, fuga, nostrum adipisci quo amet
+      dolorum quia repellat magni non minus veniam harum rem modi enim.
     </div>
   );
 }
