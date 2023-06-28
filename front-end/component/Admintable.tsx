@@ -32,24 +32,24 @@ function StickyHeadTable() {
   const [rows, setRows] = useState<any[]>([]);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch("http://127.0.0.1:5000/users", {
-          method: "GET",
-        });
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        const data = await res.json();
-        console.log(data, "++++");
-        setRows(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
     fetchData();
   }, []);
+
+  async function fetchData() {
+    try {
+      const res = await fetch("http://127.0.0.1:5000/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json", // Add the necessary headers
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+      setRows(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -82,19 +82,15 @@ function StickyHeadTable() {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {rows.map((user) => {
-                      return (
-                        <TableCell key={user.id} align={user.align}>
-                            {user}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+              .map((row, index) => ( // Use the row index as the key
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  {columns.map((column) => ( // Iterate over columns instead of rows
+                    <TableCell key={column.id} align={column.align}>
+                      {row[column.id]} {/* Access the cell value using column id */}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

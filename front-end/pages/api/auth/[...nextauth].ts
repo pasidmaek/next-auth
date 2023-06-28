@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.user = user;
       }
-      console.log("token that returns", token);
+      /* console.log("token that returns", token); */
       /* const token_sign = jwt.sign(token, signingKey, signOptions);
       console.log("sign al",token_sign) */
       return token;

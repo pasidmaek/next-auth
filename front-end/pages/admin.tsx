@@ -6,7 +6,7 @@ function admin() {
   return (
     <div>
       Hi, admin page
-      {/* <Admintable /> */}
+      <Admintable />
     </div>
   );
 }
