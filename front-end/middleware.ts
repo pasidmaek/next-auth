@@ -4,15 +4,17 @@ export default withAuth({
   callbacks: {
     authorized({ req, token }) {
       if (req.nextUrl.pathname === "/admin") {
-        /* console.log(token?.user?.user?.role); */
         return token?.user?.user?.role === "admin";
-      } /* } else if (req.nextUrl.pathname === "/user") {
-        console.log(token?.role);
-        return token?.role === "user";
-      } */
+      } else if (req.nextUrl.pathname === "/user") {
+        if (
+          token?.user?.user?.role === "user" ||
+          token?.user?.user?.role === "admin"
+        )
+          return true;
+      }
       return !!token;
     },
   },
 });
 
-export const config = { matcher: ["/admin"] };
+export const config = { matcher: ["/admin", "/user"] };

@@ -69,16 +69,15 @@ function StickyHeadTable({ data }:any) {
               .map(
                 (
                   row,
-                  index // Use the row index as the key
+                  index
                 ) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     {columns.map(
                       (
-                        column // Iterate over columns instead of rows
+                        column
                       ) => (
                         <TableCell key={column.id} align={column.align}>
                           {row[column.id]}{" "}
-                          {/* Access the cell value using column id */}
                         </TableCell>
                       )
                     )}
