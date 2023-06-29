@@ -92,18 +92,18 @@ app.post("/get_user_data", (req, res) => {
 
 // Signup endpoint
 app.post("/signup", (req, res) => {
-  const { username, password, role, id } = req.body;
-  if (!id) {
-    id == users.length + 1;
-  }
+  const { username, password, email, role } = req.body;
+  const id = users.length + 1;
   // Check if the username already exists
   const existingUser = users.find((user) => user.username === username);
+  const imgurl =
+    "https://i.pinimg.com/564x/4a/ca/6f/4aca6fdd35b62296dcf6d79ada4d95e0.jpg";
 
   if (existingUser) {
     res.status(409).json({ message: "Username already exists" });
   } else {
     // Add new user to the users data
-    const newUser = { username, password, role, id };
+    const newUser = { username, password, email, role, id, imgurl };
     users.push(newUser);
 
     // Write the updated user data to the JSON file
