@@ -1,12 +1,17 @@
 import React from "react";
 import { AppBar, Button } from "@mui/material";
 import { signOut, useSession } from "next-auth/react";
+import jwt from "jsonwebtoken";
+
 
 function Navbar() {
   const navstyle = {
     color: "white",
   };
   const { status, data: session } = useSession();
+
+  const decodedToken = session?.userid ? jwt.decode(session.userid) : null;
+  // console.log("decode -> ", decodedToken);
 
   return (
     <AppBar sx={{ position: "relative" }}>
@@ -27,9 +32,11 @@ function Navbar() {
             <Button sx={navstyle} href="/user">
               User
             </Button>
-            <Button sx={navstyle} href="/admin">
-              Admin
-            </Button>
+            {decodedToken === 'admin' && (
+              <Button sx={navstyle} href="/admin">
+                Admin
+              </Button>
+            )}
             <Button onClick={() => signOut()} sx={navstyle}>
               Sign out
             </Button>
@@ -54,3 +61,5 @@ function Navbar() {
 }
 
 export default Navbar;
+
+
