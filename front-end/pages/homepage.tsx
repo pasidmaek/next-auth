@@ -24,7 +24,7 @@ export async function getServerSideProps(context: undefined) {
     );
 
     const response = await fetch(
-      `http://127.0.0.1:8081/users/find/${username}`
+      `http://127.0.0.1:3080/users/find/${username}`
     );
 
     userData = await response.json();
