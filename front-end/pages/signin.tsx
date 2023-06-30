@@ -48,13 +48,8 @@ export default function Login() {
               }
             />
           </div>
-          <div className="mt-3 mb-2">
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              size="small"
-            >
+          <div className="mt-3 mb-2" style={{ display: "flex", justifyContent: "center" }}>
+            <Button variant="contained" color="primary" type="submit" size="small">
               Sign in
             </Button>
           </div>
