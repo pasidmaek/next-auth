@@ -9,7 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 interface Column {
-  id: "name" | "password" | "role";
+  id: "username" | "password" | "role";
   label: string;
   minWidth?: number;
   align?: "right";

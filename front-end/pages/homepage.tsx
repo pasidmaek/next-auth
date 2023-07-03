@@ -1,6 +1,4 @@
-import { signOut, useSession, getSession } from "next-auth/react";
-import { useEffect } from "react";
-import Router from "next/router";
+import { getSession } from "next-auth/react";
 import jwt from "jsonwebtoken";
 
 export default function Home({ userData }: any) {
@@ -24,7 +22,7 @@ export async function getServerSideProps(context: undefined) {
     );
 
     const response = await fetch(
-      `http://127.0.0.1:8081/users/find/${username}`
+      `http://127.0.0.1:5000/users/find/${username}`
     );
 
     userData = await response.json();
