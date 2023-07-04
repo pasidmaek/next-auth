@@ -2,12 +2,25 @@ import { signOut, useSession, getSession } from "next-auth/react";
 import { useEffect } from "react";
 import Router from "next/router";
 import jwt from "jsonwebtoken";
+import Box from '@mui/material/Box';
+import { Card, CardMedia, CardContent, CardActions, Button } from '@mui/material';
+import Typography from '@mui/material/Stack';
 
 export default function Home({ userData }: any) {
   return (
-    <div>
-      Hi <span>{userData.username}</span>
-    </div>
+    // <div>
+    //   Hi <span>{userData.username}</span>
+    // </div>
+    <Box display="flex" justifyContent="center">
+      <Card sx={{ minWidth: 345 , minHeight: 300, marginTop:'3rem'}}>
+        <CardContent>
+        <Typography variant="h1" gutterBottom style={{fontSize:'40px'}}>
+            Hi! {userData.username}
+          </Typography>
+        </CardContent>
+
+      </Card>
+    </Box>
   );
 }
 
