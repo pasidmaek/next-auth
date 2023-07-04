@@ -33,7 +33,7 @@ export async function getServerSideProps(context: undefined) {
     console.log("[Homepage] session -> ", session);
     console.log("[Homepage] session type -> ", typeof session); */
     const username = jwt.verify(
-      session.userid,
+      session.userid || "",
       "57918603f1c43835c880bce87fb2e050b22edafa4319e2732b20a1322e545647"
     );
 

@@ -1,6 +1,4 @@
-import { signOut, useSession, getSession } from "next-auth/react";
-import { useEffect } from "react";
-import Router from "next/router";
+import { getSession } from "next-auth/react";
 import jwt from "jsonwebtoken";
 import Box from '@mui/material/Box';
 import { Card, CardMedia, CardContent, CardActions, Button } from '@mui/material';
