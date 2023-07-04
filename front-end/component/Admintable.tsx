@@ -9,7 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 interface Column {
-  id: "name" | "password" | "role";
+  id: "username" | "password" | "role";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -26,14 +26,15 @@ const columns: readonly Column[] = [
   },
 ];
 
-function StickyHeadTable({ data }:any) {
+function StickyHeadTable({ data }: any) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState<any[]>([]);
 
   useEffect(() => {
     setRows(data);
-  }, []);
+    console.log(data);
+  }, [data]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -66,24 +67,15 @@ function StickyHeadTable({ data }:any) {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map(
-                (
-                  row,
-                  index
-                ) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                    {columns.map(
-                      (
-                        column
-                      ) => (
-                        <TableCell key={column.id} align={column.align}>
-                          {row[column.id]}{" "}
-                        </TableCell>
-                      )
-                    )}
-                  </TableRow>
-                )
-              )}
+              .map((row, index) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  {columns.map((column) => (
+                    <TableCell key={column.id} align={column.align}>
+                      {row[column.id]}{" "}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
