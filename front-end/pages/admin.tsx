@@ -27,8 +27,10 @@ function admin({ userData }: any) {
   }, [users]);
   return (
     <>
-      {users && <Admintable data={users} />}
-      <ul>
+      <div style={{ display: "flex", justifyContent: "center", margin: "2rem" }}>
+        {users && <Admintable data={users} />}
+      </div>
+      {/* <ul>
         {users.map((user, index) => (
           <li key={index}>{user.username}</li>
         ))}
@@ -47,7 +49,7 @@ function admin({ userData }: any) {
         }}
       >
         update
-      </button>
+      </button> */}
     </>
   );
 }
@@ -59,26 +61,31 @@ export async function getServerSideProps(context: undefined) {
   let userData: any;
 
   if (session) {
-<<<<<<< HEAD
-=======
     /*  console.log("[Homepage] -> haved session");
     console.log("[Homepage] session -> ", session);
     console.log("[Homepage] session type -> ", typeof session); */
->>>>>>> origin/add-reducer
     const username = jwt.verify(
       session.userid || "",
       "57918603f1c43835c880bce87fb2e050b22edafa4319e2732b20a1322e545647"
     );
 
     const response = await fetch(
+<<<<<<<<< Temporary merge branch 1
       `http://127.0.0.1:8081/users/find/${username}`
+=========
+      `http://127.0.0.1:3080/users/find/${username}`
+>>>>>>>>> Temporary merge branch 2
     );
     const user = await response.json();
 
     if (user.role !== "admin") {
       userData = {};
     } else {
+<<<<<<<<< Temporary merge branch 1
       const allResponse = await fetch(`http://127.0.0.1:8081/users`);
+=========
+      const allResponse = await fetch(`http://127.0.0.1:3080/users`);
+>>>>>>>>> Temporary merge branch 2
       const all = await allResponse.json();
       userData = all;
     }

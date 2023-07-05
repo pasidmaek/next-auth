@@ -22,7 +22,11 @@ export async function getServerSideProps(context: undefined) {
     );
 
     const response = await fetch(
+<<<<<<<<< Temporary merge branch 1
       `http://127.0.0.1:5000/users/find/${username}`
+=========
+      `http://127.0.0.1:3080/users/find/${username}`
+>>>>>>>>> Temporary merge branch 2
     );
 
     userData = await response.json();
