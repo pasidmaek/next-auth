@@ -9,12 +9,13 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Tooltip, IconButton, Button } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
-import Dialog from '@mui/material/Dialog';
+import Dialog from "@mui/material/Dialog";
+import { Rootstore } from "../pages/store"
 
 import ConfirmDelete from "./DialogDelete";
 import DialogEdit from "./DialogEdit";
 interface Column {
-  id: "username" | "password" | "role" | "delete"; // Add "delete" option
+  id: "username" | "password" | "role" | "actions"; // Add "delete" option
   label: string;
   minWidth?: number;
   align?: "right" | "center";
@@ -33,20 +34,21 @@ const columns: readonly Column[] = [
 ];
 
 interface Idata {
-  id?: number;
-  username: string;
-  password: string;
-  role: string;
+  id: number;
+  username?: string;
+  password?: string;
+  role?: string;
+  imgurl?: string;
 }
 
 const initialData = {
   username: "",
   password: "",
   role: "",
+  imgurl: "",
 };
 
 function StickyHeadTable({ data }: any) {
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState<any[]>([]);
@@ -73,24 +75,24 @@ function StickyHeadTable({ data }: any) {
 
   const handleCloseDelete = () => {
     setIsOpenDeleteDialog(false);
-  }
+  };
   const handleCloseEdit = () => {
     setIsOpenEditDialog(false);
-  }
+  };
 
   const handleDelete = (temp: Idata) => {
     setSelectDelete(temp);
-    setIsOpenDeleteDialog(true)
+    setIsOpenDeleteDialog(true);
   };
 
   const handleEdit = (temp: Idata) => {
-    setSelectEdit(temp)
-    setIsOpenEditDialog(true)
-  }
+    setSelectEdit(temp);
+    setIsOpenEditDialog(true);
+  };
 
   useEffect(() => {
     //console.log('Selected value updated:', selectEdit);
-  }, [selectDelete,selectEdit]);
+  }, [selectDelete, selectEdit]);
 
   return (
     <>
@@ -123,12 +125,25 @@ function StickyHeadTable({ data }: any) {
                         return (
                           <TableCell key={column.id} align={column.align}>
                             <Tooltip arrow placement="left" title="Edit">
-                              <IconButton onClick={() => { handleEdit(row) }}>
+                              <IconButton
+                                onClick={() => {
+                                  handleEdit(row);
+                                }}
+                              >
                                 <Edit />
                               </IconButton>
                             </Tooltip>
-                            <Tooltip arrow color="error" placement="right" title="Delete">
-                              <IconButton onClick={() => { handleDelete(row) }}>
+                            <Tooltip
+                              arrow
+                              color="error"
+                              placement="right"
+                              title="Delete"
+                            >
+                              <IconButton
+                                onClick={() => {
+                                  handleDelete(row);
+                                }}
+                              >
                                 <Delete />
                               </IconButton>
                             </Tooltip>

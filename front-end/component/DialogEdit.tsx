@@ -17,7 +17,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, updateUser } from "../features/userSlice";
-import { RootState } from "./store";
+import { RootState } from "../pages/store";
 
 interface Idata {
     id: number;
@@ -56,6 +56,7 @@ const DialogEdit = (props: IDialog) => {
     }
     const handleCancel = () => {
         setNewUser({
+            id: 0,
             username: "",
             password: "",
             role: "",
@@ -74,14 +75,14 @@ const DialogEdit = (props: IDialog) => {
             >
                 <DialogTitle id="alert-dialog-title">Edit</DialogTitle>
                 <DialogContent style={{ padding: '20px' }}>
-                    <FormControl sx={{ m: 1, width: '5ch' }} variant="outlined">
+                    {/* <FormControl sx={{ m: 1, width: '5ch' }} variant="outlined">
                         <TextField
                             disabled
                             id="id-field"
                             label="ID"
                             value={props.selectEdit.id}
                         />
-                    </FormControl>
+                    </FormControl> */}
                     <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                         <TextField
                             required

@@ -7,7 +7,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser } from "../features/userSlice";
-
+import { getSession, useSession } from "next-auth/react";
+import jwt from "jsonwebtoken";
 interface Idata {
     id: number;
     username?: string;
@@ -25,16 +26,18 @@ interface IDialog {
 const ConfirmDelete = (props: IDialog) => {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
-    const handleClose = () => {
-        setOpen(!false);
-    }
+    const { status, data: session } = useSession();
+    const decodedToken = session?.userid ? jwt.decode(session.userid) : null; 
+   
     const handleDelete = () => {
         // console.log('select user-> ',props.selected)
-        if (props.selectDelete.role !== 'admin') {
+        if (props.selectDelete.role !== decodedToken) {
             dispatch(deleteUser(props.selectDelete.id))
         }
+        else{
+            alert ("Cannot delete loging account!! ")
+        }
         props.handleCloseDelete();
-        
     }
     return (
         <>

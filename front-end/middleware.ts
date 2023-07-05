@@ -4,11 +4,11 @@ export default withAuth({
   callbacks: {
     authorized({ req, token }) {
       if (req.nextUrl.pathname === "/admin") {
-        return token?.user?.user?.role === "admin";
+        return token?.user?.role === "admin";
       } else if (req.nextUrl.pathname === "/user") {
         if (
-          token?.user?.user?.role === "user" ||
-          token?.user?.user?.role === "admin"
+          token?.user?.role === "user" ||
+          token?.user?.role === "admin"
         )
           return true;
       }
