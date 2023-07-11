@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, Button } from "@mui/material";
 import { signOut, useSession } from "next-auth/react";
 import jwt from "jsonwebtoken";
-
+import { navList } from "../constant/role";
 
 function Navbar() {
   const navstyle = {
@@ -10,12 +10,12 @@ function Navbar() {
   };
   const { status, data: session } = useSession();
 
-  const decodedToken = session?.userid ? jwt.decode(session.userid) : null;
-  // console.log("decode -> ", decodedToken);
+  const decodedToken = session?.userid ? jwt.decode(session.userid).toString() : null;
+  // console.log("session -> ", session);
 
   return (
     <AppBar sx={{ position: "relative" }}>
-      {status === "authenticated" && (
+      {/* {status === "authenticated" && (
         <div
           style={{
             display: "flex",
@@ -55,7 +55,51 @@ function Navbar() {
             Sign in
           </Button>
         </div>
-      )}
+      )} */}
+
+      <div
+        style={{
+          display: "flex",
+          flexFlow: "row",
+          justifyContent: "end",
+        }}
+      >
+
+
+        {navList.map((item, index) => (
+          item.auth === 'authenticated' && status === 'authenticated' && decodedToken && item.accessRole?.includes(decodedToken) ? (
+            <Button
+              key={index}
+              sx={navstyle}
+              href={item.path}
+              onClick={() => {
+                if (item.navName === 'signout')
+                  signOut()
+              }
+              }
+            >
+              {item.navName}
+            </Button>
+
+          )
+            : (
+              item.auth === 'unauthenticated' && status === 'unauthenticated' && (
+                <Button
+                  key={index}
+                  sx={navstyle}
+                  href={item.path}
+                  onClick={() => {
+                    if (item.navName === 'signout')
+                      signOut()
+                  }
+                  }
+                >
+                  {item.navName}
+                </Button>
+              )
+            )))
+        }
+      </div>
     </AppBar>
   );
 }
