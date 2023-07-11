@@ -26,6 +26,30 @@ app.get("/users/:id", function (req, res) {
   res.send(aUser);
 });
 
+app.get("/users/checkrole/:username", function (req, res) {
+  // var aUser = users[req.params.id];
+  console.log("req ->", req.params.username);
+  var aUser = users.filter((user) => {
+    return user.username === req.params.username;
+  });
+  console.log(aUser);
+  if (aUser) {
+    if (aUser[0].role === "admin") {
+      res.json({
+        status: true,
+      });
+    } else {
+      res.json({
+        status: false,
+      });
+    }
+  } else {
+    res.json({
+      message: "Invalid username",
+    });
+  }
+});
+
 app.get("/users/find/:username", function (req, res) {
   // var aUser = users[req.params.id];
   console.log("req ->", req.params.username);
@@ -167,7 +191,7 @@ app.post("/signout", (req, res) => {
   res.status(200).json({ message: "Sign out successful" });
 });
 
-var server = app.listen(8081, function () {
+var server = app.listen(5000, function () {
   var port = server.address().port;
   console.log("Application is running at http://127.0.0.1:%s", port);
 });
