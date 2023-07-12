@@ -1,9 +1,10 @@
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import Navbar from "@/component/Navbar";
+import Navbar from "@/components/Navbar";
 import "@/styles/globals.css";
 import { store } from "./store";
 import { Provider } from "react-redux";
+import Layout from "@/components/Layout";
 
 export default function App({
   Component,
@@ -12,8 +13,10 @@ export default function App({
   return (
     <Provider store={store}>
       <SessionProvider session={session}>
+        {/* <Layout> */}
         <Navbar />
-        <Component {...pageProps} />
+          <Component {...pageProps} />
+        {/* </Layout> */}
       </SessionProvider>
     </Provider>
   );

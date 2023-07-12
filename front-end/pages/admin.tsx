@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Admintable from "../component/Admintable";
+import Admintable from "../components/Admintable";
 import { getSession } from "next-auth/react";
 import jwt from "jsonwebtoken";
 import { useDispatch, useSelector } from "react-redux";

@@ -65,6 +65,7 @@ const DialogEdit = (props: IDialog) => {
         });
         props.handleCloseEdit();
     };
+
     return (
         <>
             <Dialog

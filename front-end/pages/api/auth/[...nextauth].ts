@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         // session = token?.user?.user;
         let sessionToken = jwt.sign(
-          token?.user?.role || "",
+          token?.user?.username|| "",
           "57918603f1c43835c880bce87fb2e050b22edafa4319e2732b20a1322e545647"
           // { algorithm: "RS256" }
         );

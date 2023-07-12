@@ -61,7 +61,6 @@ function StickyHeadTable({ data }: any) {
     setRows(data);
     console.log(data);
   }, [data]);
-
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };

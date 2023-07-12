@@ -8,13 +8,13 @@ export type NavItem = {
 export const navList:NavItem[] = [
   {
     navName: 'home',
-    accessRole: ['admin', 'user'],
+    accessRole: ['admin', 'user', 'bob','user01'],
     auth: 'authenticated',
     path: '/',
   },
   {
     navName: 'user',
-    accessRole: ['admin', 'user'],
+    accessRole: ['admin', 'user', 'bob','user01'],
     auth: 'authenticated',
     path: '/user',
   },
@@ -27,11 +27,11 @@ export const navList:NavItem[] = [
   },
   {
     navName: 'signout',
-    accessRole: ['admin', 'user'],
+    accessRole: ['admin', 'user', 'bob','user01'],
     auth: 'authenticated',
   },
   {
-    navName: 'signin',
+    navName: 'sign in',
     path: '/signin',
     auth: 'unauthenticated',
   },
