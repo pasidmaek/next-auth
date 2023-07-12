@@ -20,15 +20,20 @@ function admin({ userData }: any) {
   };
   useEffect(() => {
     dispatch(getUser(userData));
-    console.log(userData);
+    // console.log(userData);
   }, [dispatch, userData]);
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
+  // useEffect(() => {
+  //   console.log(users);
+  // }, [users]);
+  // useEffect(() => {
+  //   console.log(userData);
+  // }, [userData]);
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center", margin: "2rem" }}>
-        {users && <Admintable data={users} />}
+      <div
+        style={{ display: "flex", justifyContent: "center", margin: "2rem" }}
+      >
+        {userData && <Admintable data={userData} />}
       </div>
       {/* <ul>
         {users.map((user, index) => (
@@ -69,18 +74,33 @@ export async function getServerSideProps(context: undefined) {
       "57918603f1c43835c880bce87fb2e050b22edafa4319e2732b20a1322e545647"
     );
 
-    const response = await fetch(
-      `http://127.0.0.1:3080/users/find/${username}`
-    );
-    const user = await response.json();
-
-    if (user.role !== "admin") {
-      userData = {};
-    } else {
-      const allResponse = await fetch(`http://127.0.0.1:3080/users`);
-      const all = await allResponse.json();
+    const allResponse = await fetch(`http://127.0.0.1:5000/users`);
+    const all = await allResponse.json();
+    console.log("[admin] all ->", all);
+    const check = all.filter((user: any) => {
+      return user.username === username;
+    });
+    // console.log("[admin] check ->", check);
+    if (all && check[0].role === "admin") {
       userData = all;
+    } else {
+      userData = [{}];
     }
+
+    // console.log("[admin] userData ->", userData);
+
+    // const response = await fetch(
+    //   `http://127.0.0.1:5000/users/find/${username}`
+    // );
+    // const user = await response.json();
+
+    // if (user.role !== "admin") {
+    //   userData = {};
+    // } else {
+    //   const allResponse = await fetch(`http://127.0.0.1:8081/users`);
+    //   const all = await allResponse.json();
+    //   userData = all;
+    // }
   } else {
     console.log("[Homepage] -> no session");
   }
