@@ -33,7 +33,7 @@ function admin({ userData }: any) {
       <div
         style={{ display: "flex", justifyContent: "center", margin: "2rem" }}
       >
-        {userData && <Admintable data={userData} />}
+        {users && <Admintable data={users} />}
       </div>
       {/* <ul>
         {users.map((user, index) => (

@@ -30,5 +30,21 @@
     "role": "user",
     "id": 4,
     "imgurl": "https://i.pinimg.com/564x/4a/ca/6f/4aca6fdd35b62296dcf6d79ada4d95e0.jpg"
+  },
+  {
+    "username": "user02",
+    "password": "user02",
+    "email": "user02@mail.com",
+    "role": "user",
+    "id": 5,
+    "imgurl": "https://i.pinimg.com/564x/4a/ca/6f/4aca6fdd35b62296dcf6d79ada4d95e0.jpg"
+  },
+  {
+    "username": "manager",
+    "password": "manager",
+    "email": "manager@mail.com",
+    "role": "manager",
+    "id": 6,
+    "imgurl": "https://i.pinimg.com/564x/4a/ca/6f/4aca6fdd35b62296dcf6d79ada4d95e0.jpg"
   }
 ]

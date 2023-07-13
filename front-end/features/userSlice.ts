@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { stat } from "fs";
 
 export interface User {
   username?: string;
@@ -29,8 +28,10 @@ export const userSlice = createSlice({
       state.users = [...newUser];
     },
     deleteUser: (state, action: PayloadAction<number>) => {
+      console.log("[Delete] -> ", action.payload);
       const userId = action.payload;
       state.users = state.users.filter((user) => user.id !== userId);
+      console.log("[Delete] -> ", state.users);
     },
     updateUser: (state, action: PayloadAction<User>) => {
       const newUser = action.payload;

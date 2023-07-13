@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import { Tooltip, IconButton, Button } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import Dialog from "@mui/material/Dialog";
-import { Rootstore } from "../pages/store"
+import { RootState } from "../pages/store";
 
 import ConfirmDelete from "./DialogDelete";
 import DialogEdit from "./DialogEdit";
@@ -59,7 +59,7 @@ function StickyHeadTable({ data }: any) {
 
   useEffect(() => {
     setRows(data);
-    console.log(data);
+    console.log("[Admintable] ->", data);
   }, [data]);
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
