@@ -10,6 +10,7 @@ function Navbar() {
   const navstyle = {
     color: "white",
   };
+  // console.log('session is = ',session);
 
   // const [role,setRole] = React.useState('');
   // const fetchData = async() => {
@@ -23,8 +24,6 @@ function Navbar() {
   // })
 
   const username = jwt.decode(session?.userid);
-  //console.log("session -> ", username);
-  //console.log('status-> ', status)
 
   return (
     <AppBar sx={{ position: "relative" }}>
@@ -35,8 +34,9 @@ function Navbar() {
           justifyContent: "end",
         }}
       >
+        
         {navList.map((item, index) => (
-          item.auth === 'authenticated' && status == 'authenticated' && item.accessRole?.includes(username) ? (
+          item.accessRole?.includes(username) && session ? (
             <Button
               key={index}
               sx={navstyle}
@@ -53,7 +53,7 @@ function Navbar() {
           )
 
             : (
-              item.auth === 'unauthenticated' && status == 'unauthenticated' && (
+              (item.accessRole?.length==0)&&(session === undefined || session === null)&& ( 
                 <Button
                   key={index}
                   sx={navstyle}
@@ -75,5 +75,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-

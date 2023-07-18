@@ -34,7 +34,7 @@ const columns: readonly Column[] = [
 ];
 
 interface Idata {
-  id: number;
+  id?: number;
   username?: string;
   password?: string;
   role?: string;

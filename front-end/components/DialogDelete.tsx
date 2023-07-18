@@ -15,6 +15,7 @@ interface Idata {
     password?: string;
     role?: string;
     imgurl?: string;
+    email?: string;
 }
 
 interface IDialog {
@@ -27,10 +28,10 @@ const ConfirmDelete = (props: IDialog) => {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const { status, data: session } = useSession();
-    const decodedToken = session?.userid ? jwt.decode(session.userid) : null; 
+    const decodedToken = jwt.decode(session?.userid); 
    
     const handleDelete = () => {
-        // console.log('select user-> ',props.selected)
+        console.log('select user-> ',props.selectDelete)
         if (props.selectDelete.role !== decodedToken) {
             dispatch(deleteUser(props.selectDelete.id))
         }
