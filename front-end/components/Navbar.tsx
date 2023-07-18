@@ -14,7 +14,7 @@ function Navbar() {
 
   // const [role,setRole] = React.useState('');
   // const fetchData = async() => {
-  //   const response = await fetch(`http://127.0.0.1:3080/users/checkrole/${username}`, { mode: 'no-cors'});
+  //   const response = await fetch(`http://127.0.0.1:5000/users/checkrole/${username}`, { mode: 'no-cors'});
   //   let data = await response.json();
   //   setRole(data);
   //   console.log('role -> ',response)

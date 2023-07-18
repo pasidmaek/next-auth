@@ -1,19 +1,19 @@
 export type NavItem = {
-    navName: string;
-    accessRole?: string[] | string;
-    auth?: string;
-    path?: string;
+  navName: string;
+  accessRole?: string[] | string;
+  auth?: string;
+  path?: string;
 };
 
-export const navList:NavItem[] = [
+export const navList: NavItem[] = [
   {
     navName: 'home',
-    accessRole: ['admin', 'user', 'bob','user01'],
+    accessRole: ['admin', 'user', 'bob','user01','manager'],
     path: '/',
   },
   {
     navName: 'user',
-    accessRole: ['admin', 'user', 'bob','user01'],
+    accessRole: ['admin', 'user', 'bob','user01',],
     path: '/user',
   },
   {
@@ -25,12 +25,11 @@ export const navList:NavItem[] = [
   },
   {
     navName: 'signout',
-    accessRole: ['admin', 'user', 'bob','user01'],
+    accessRole: ['admin', 'user', 'bob','user01','manager'],
   },
   {
     navName: 'sign in',
     path: '/signin',
     accessRole: [],
   },
-  
 ];

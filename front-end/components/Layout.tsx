@@ -12,7 +12,7 @@ export default function Layout(props: any) {
   const { status, data: session } = useSession();
 
   const fetcher = (user: any) => 
-    fetch(`http://127.0.0.1:3080/users/checkrole/${username}`)
+    fetch(`http://127.0.0.1:5000/users/checkrole/${username}`)
       .then(res => res.json())
   
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function Layout(props: any) {
       setUsername(_username);
       console.log('props children ->', _username);
 
-      // fetch(`http://127.0.0.1:3080/users/checkrole/${_username}`)
+      // fetch(`http://127.0.0.1:5000/users/checkrole/${_username}`)
       // .then(response => response.json())
       // .then(data => setRole(data.status))
 
