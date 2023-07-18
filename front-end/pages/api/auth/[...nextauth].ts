@@ -10,6 +10,7 @@ import jwt from "jsonwebtoken";
 //   id: number;
 //   imgurl: string | null;
 // }
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -19,7 +20,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch(`http://127.0.0.1:5000/login`, {
+        const res = await fetch(`http://127.0.0.1:3080/login`, {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
@@ -36,11 +37,13 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.access = user.access_token;
         token.user = user.user;
       }
       /* console.log("token that returns", token); */
       /* const token_sign = jwt.sign(token, signingKey, signOptions);
       console.log("sign al",token_sign) */
+      //console.log(token);
       return token;
     },
     async session({ session, token }) {
@@ -51,7 +54,7 @@ export const authOptions: NextAuthOptions = {
           "57918603f1c43835c880bce87fb2e050b22edafa4319e2732b20a1322e545647"
           // { algorithm: "RS256" }
         );
-        session = { userid: sessionToken, expires: "" };
+        session = { userid: sessionToken, expires: "", token: token.access };
       }
       return session;
     },

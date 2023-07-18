@@ -74,7 +74,11 @@ export async function getServerSideProps(context: undefined) {
       "57918603f1c43835c880bce87fb2e050b22edafa4319e2732b20a1322e545647"
     );
 
-    const allResponse = await fetch(`http://127.0.0.1:5000/users`);
+    const allResponse = await fetch(`http://127.0.0.1:3080/users`, {
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+      },
+    });
     const all = await allResponse.json();
     console.log("[admin] all ->", all);
     const check = all.filter((user: any) => {
@@ -90,7 +94,7 @@ export async function getServerSideProps(context: undefined) {
     // console.log("[admin] userData ->", userData);
 
     // const response = await fetch(
-    //   `http://127.0.0.1:5000/users/find/${username}`
+    //   `http://127.0.0.1:3080/users/find/${username}`
     // );
     // const user = await response.json();
 

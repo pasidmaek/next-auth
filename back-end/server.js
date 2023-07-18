@@ -12,18 +12,25 @@ app.use(express.json()); //For JSON requests
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/users", function (req, res) {
-  console.log(users);
-  res.send(users);
+  const isAccess = TokenManager.checkAuthentication(req);
+
+  if (isAccess) {
+    console.log(users);
+    res.send(users);
+  }
 });
 
 app.get("/users/:id", function (req, res) {
+  const isAccess = TokenManager.checkAuthentication(req);
   // var aUser = users[req.params.id];
   console.log("req ->", req.params.id);
-  var aUser = users.filter((_, index) => {
-    return index + 1 == req.params.id;
-  });
-  console.log(aUser);
-  res.send(aUser);
+  if (isAccess) {
+    var aUser = users.filter((_, index) => {
+      return index + 1 == req.params.id;
+    });
+    console.log(aUser);
+    res.send(aUser);
+  }
 });
 
 app.get("/users/checkrole/:username", function (req, res) {
@@ -51,15 +58,26 @@ app.get("/users/checkrole/:username", function (req, res) {
 });
 
 app.get("/users/find/:username", function (req, res) {
-  // var aUser = users[req.params.id];
-  console.log("req ->", req.params.username);
-  var aUser = users.filter((user) => {
-    return user.username == req.params.username;
-  });
-  var oneUser = aUser[0];
-  console.log(aUser);
-  res.send(oneUser);
+  const isAccess = TokenManager.checkAuthentication(req);
+
+  if (isAccess) {
+    var aUser = users.filter((user) => {
+      return user.username == req.params.username;
+    });
+    var oneUser = aUser[0];
+    //console.log(aUser);
+    res.send(oneUser);
+  }
 });
+// var aUser = users[req.params.id];
+// console.log("req ->", req.params.username);
+// var aUser = users.filter((user) => {
+//   return user.username == req.params.username;
+// });
+// var oneUser = aUser[0];
+// console.log(aUser);
+// res.send(oneUser);
+// });
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -191,7 +209,7 @@ app.post("/signout", (req, res) => {
   res.status(200).json({ message: "Sign out successful" });
 });
 
-var server = app.listen(5000, function () {
+var server = app.listen(3080, function () {
   var port = server.address().port;
   console.log("Application is running at http://127.0.0.1:%s", port);
 });
