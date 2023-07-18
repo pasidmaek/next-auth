@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import "@/styles/globals.css";
 import { store } from "./store";
 import { Provider } from "react-redux";
-import Test from "@/components/Layout/Test";
 
 export default function App({
   Component,
