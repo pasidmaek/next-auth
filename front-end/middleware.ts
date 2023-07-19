@@ -1,26 +1,10 @@
 import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
-// export default withAuth({
-//   callbacks: {
-//     authorized({ req, token }) {
-//       if (req.nextUrl.pathname === "/admin") {
-//         return token?.user?.role === "admin";
-//       } else if (req.nextUrl.pathname === "/user") {
-//         if (token?.user?.role === "user" || token?.user?.role === "admin")
-//           return true;
-//       }
-//       return !!token;
-//     },
-//   },
-// });
-
-// export const config = { matcher: ["/admin", "/user"] };
-
 export default withAuth(
   function middleware(request: NextRequestWithAuth) {
     console.log("[Middleware] -> ", request.nextUrl.pathname);
-    console.log("[Middleware] -> ", request.nextauth.token);
+    console.log("[Middleware] -> ", request.nextauth.token?.access);
 
     if (
       request.nextUrl.pathname.startsWith("/admin") &&
@@ -28,6 +12,28 @@ export default withAuth(
     ) {
       return NextResponse.redirect(new URL("/denied", request.url));
     }
+
+    if (request.nextUrl.pathname.startsWith("/data")) {
+      let parts = request.nextUrl.pathname.split("/");
+      console.log("search -> ", parts[2]);
+      return NextResponse.rewrite(
+        new URL(
+          `https://jsonplaceholder.typicode.com/todos/${parts[2]}`,
+          request.url
+        )
+      );
+    }
+
+    // if (request.nextUrl.pathname.includes("/users/find")) {
+    //   const headers = new Headers(request.headers);
+
+    //   headers.set("Authorization", `Bearer ${request.nextauth.token?.access}`);
+    //   console.log("Call");
+    //   return NextResponse.next({
+    //     ...request,
+    //     headers: headers,
+    //   });
+    // }
 
     if (
       request.nextUrl.pathname.startsWith("/user") &&
@@ -44,4 +50,6 @@ export default withAuth(
   }
 );
 
-export const config = { matcher: ["/admin", "/user"] };
+export const config = {
+  matcher: ["/admin", "/user", "/data/:path*", "/fetch"],
+};
