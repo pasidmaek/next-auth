@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, deleteUser, updateUser } from "../features/userSlice";
 import { RootState } from "./store";
+import { getApiWithAxios } from "../hooks/useApiHook";
 
 function admin({ userData }: any) {
   const dispatch = useDispatch();
@@ -66,27 +67,28 @@ export async function getServerSideProps(context: undefined) {
   let userData: any;
 
   if (session) {
-    /*  console.log("[Homepage] -> haved session");
-    console.log("[Homepage] session -> ", session);
-    console.log("[Homepage] session type -> ", typeof session); */
     const username = jwt.verify(
       session.userid || "",
       "57918603f1c43835c880bce87fb2e050b22edafa4319e2732b20a1322e545647"
     );
 
-    const allResponse = await fetch(`http://127.0.0.1:3080/users`, {
-      headers: {
-        Authorization: `Bearer ${session.token}`,
-      },
-    });
-    const all = await allResponse.json();
-    console.log("[admin] all ->", all);
-    const check = all.filter((user: any) => {
+    // const allResponse = await fetch(`http://127.0.0.1:3080/users`, {
+    //   headers: {
+    //     Authorization: `Bearer ${session.token}`,
+    //   },
+    // });
+
+    const url = `http://127.0.0.1:3080/users`;
+    const allUserData = await getApiWithAxios(url, session.token);
+
+    //const all = await allUserData.json();
+    //console.log("[admin] all ->", allUserData);
+    const check = allUserData.filter((user: any) => {
       return user.username === username;
     });
     // console.log("[admin] check ->", check);
-    if (all && check[0].role === "admin") {
-      userData = all;
+    if (allUserData && check[0].role === "admin") {
+      userData = allUserData;
     } else {
       userData = [{}];
     }
@@ -105,8 +107,7 @@ export async function getServerSideProps(context: undefined) {
     //   const all = await allResponse.json();
     //   userData = all;
     // }
-  } else {
-    console.log("[Homepage] -> no session");
+
   }
 
   return {

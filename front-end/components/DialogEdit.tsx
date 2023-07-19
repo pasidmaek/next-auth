@@ -20,7 +20,7 @@ import { getUser, updateUser } from "../features/userSlice";
 import { RootState } from "../pages/store";
 
 interface Idata {
-    id: number;
+    id?: number;
     username?: string;
     password?: string;
     role?: string;
