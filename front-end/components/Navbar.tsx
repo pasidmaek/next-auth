@@ -14,7 +14,7 @@ function Navbar() {
 
   // const [role,setRole] = React.useState('');
   // const fetchData = async() => {
-  //   const response = await fetch(`http://127.0.0.1:5000/users/checkrole/${username}`, { mode: 'no-cors'});
+  //   const response = await fetch(`http://127.0.0.1:3080/users/checkrole/${username}`, { mode: 'no-cors'});
   //   let data = await response.json();
   //   setRole(data);
   //   console.log('role -> ',response)
@@ -32,43 +32,33 @@ function Navbar() {
           display: "flex",
           flexFlow: "row",
           justifyContent: "end",
-        }}
-      >
-        
-        {navList.map((item, index) => (
+        }}>
+        {navList.map((item, index) =>
           item.accessRole?.includes(username) && session ? (
             <Button
               key={index}
               sx={navstyle}
               href={item.path}
               onClick={() => {
-                if (item.navName === 'signout')
-                  signOut()
-              }
-              }
-            >
+                if (item.navName === "signout") signOut();
+              }}>
               {item.navName}
             </Button>
-
+          ) : (
+            item.accessRole?.length == 0 &&
+            (session === undefined || session === null) && (
+              <Button
+                key={index}
+                sx={navstyle}
+                href={item.path}
+                onClick={() => {
+                  if (item.navName === "signout") signOut();
+                }}>
+                {item.navName}
+              </Button>
+            )
           )
-
-            : (
-              (item.accessRole?.length==0)&&(session === undefined || session === null)&& ( 
-                <Button
-                  key={index}
-                  sx={navstyle}
-                  href={item.path}
-                  onClick={() => {
-                    if (item.navName === 'signout')
-                      signOut()
-                  }
-                  }
-                >
-                  {item.navName}
-                </Button>
-              )
-            )))
-        }
+        )}
       </div>
     </AppBar>
   );

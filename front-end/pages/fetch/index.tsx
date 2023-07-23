@@ -1,4 +1,5 @@
 "use client";
+import FakeDataComponent from "@/components/FakeDataComponent";
 import React, { useState } from "react";
 
 type Props = {};
@@ -48,8 +49,7 @@ const TestFetchPage = (props: Props) => {
             margin: "0 1rem",
             display: "inline",
             borderRadius: "5px",
-          }}
-        >
+          }}>
           Search
         </div>
       </form>
@@ -64,6 +64,7 @@ const TestFetchPage = (props: Props) => {
       ) : (
         "set search to fetch data..."
       )}
+      <FakeDataComponent />
     </>
   );
 };
